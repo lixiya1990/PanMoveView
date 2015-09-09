@@ -263,6 +263,13 @@
     //
     UIButton *recognizerView = (UIButton *)recognizer.view;
     
+    // 禁用其他按钮的拖拽手势
+    for (UIButton * bt in self.view.subviews) {
+        if (bt!=recognizerView) {
+            bt.userInteractionEnabled = NO;
+        }
+    }
+    
     // 长按视图在父视图中的位置（触摸点的位置）
     CGPoint recognizerPoint = [recognizer locationInView:self.view];
     NSLog(@"_____%@",NSStringFromCGPoint(recognizerPoint));
@@ -357,7 +364,13 @@
         
         
     }else if(recognizer.state == UIGestureRecognizerStateEnded){
-        
+        // 恢复其他按钮的拖拽手势
+        for (UIButton * bt in self.view.subviews) {
+            if (bt!=recognizerView) {
+                bt.userInteractionEnabled = YES;
+            }
+        }
+
         // 结束时候恢复view的外观（放大，改变颜色等）
         [UIView animateWithDuration:0.2 animations:^{
             recognizerView.transform = CGAffineTransformMakeScale(1.0, 1.0);
