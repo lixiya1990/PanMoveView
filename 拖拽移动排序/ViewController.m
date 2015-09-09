@@ -22,8 +22,8 @@
     // 用于赋值CGPoint
     CGPoint valuePoint;
     
+    
 }
-
 
 @end
 
@@ -49,10 +49,11 @@
 
 
 - (void)viewDidLoad {
-    self.title = @"拖拽移动排序";
+    self.title = @"点击按钮可以删除，长按排序";
     [super viewDidLoad];
     totalNumber = 9;
 
+    
     // 创建9宫格
     CGFloat btW = (IphoneWidth-20*4)/3;
     CGFloat btH = btW;
@@ -143,8 +144,11 @@
  * 拖拽手势
  * 无论怎样拖拽移动 页面上view的tag值是一直按顺序排列的，这个作为排序标准
  */
+/*
 -(void)pan:(UIPanGestureRecognizer*)recognizer{
-    
+    //
+    UIButton *recognizerView = (UIButton *)recognizer.view;
+ 
     // 获取移动偏移量
     CGPoint recognizerPoint = [recognizer translationInView:self.view];
     NSLog(@"_____%@",NSStringFromCGPoint(recognizerPoint));
@@ -153,21 +157,21 @@
         
         // 开始的时候改变拖动view的外观（放大，改变颜色等）
         [UIView animateWithDuration:0.2 animations:^{
-            recognizer.view.transform = CGAffineTransformMakeScale(1.3, 1.3);
-            recognizer.view.alpha = 0.7;
+            recognizerView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+            recognizerView.alpha = 0.7;
         }];
         
         // 把拖动view放到最上层
-        [self.view bringSubviewToFront:recognizer.view];
+        [self.view bringSubviewToFront:recognizerView];
         
         // valuePoint保存最新的移动位置
-        valuePoint = recognizer.view.center;
+        valuePoint = recognizerView.center;
         
     }else if(recognizer.state == UIGestureRecognizerStateChanged){
         // 更新pan.view的center
-        CGFloat x = recognizer.view.center.x + recognizerPoint.x;
-        CGFloat y = recognizer.view.center.y + recognizerPoint.y;
-        recognizer.view.center = CGPointMake(x, y);
+        CGFloat x = recognizerView.center.x + recognizerPoint.x;
+        CGFloat y = recognizerView.center.y + recognizerPoint.y;
+        recognizerView.center = CGPointMake(x, y);
         
         // 因为拖动会持续执行 所以每次结束都要清空
         [recognizer setTranslation:CGPointZero inView:self.view];
@@ -176,11 +180,11 @@
             
             // 判断是否移动到另一个view区域
             // CGRectContainsPoint(rect,point) 判断某个点是否被某个frame包含
-            if (CGRectContainsPoint(bt.frame, recognizer.view.center)&&bt!=recognizer.view)
+            if (CGRectContainsPoint(bt.frame, recognizerView.center)&&bt!=recognizerView)
             {
                 
                 // 开始位置
-                NSInteger fromIndex = recognizer.view.tag - KBase_tag;
+                NSInteger fromIndex = recognizerView.tag - KBase_tag;
                 
                 // 需要移动到的位置
                 NSInteger toIndex = bt.tag - KBase_tag;
@@ -202,8 +206,8 @@
                             [nextBt setTitle:[NSString stringWithFormat:@"tag值%ld",nextBt.tag] forState:UIControlStateNormal];
                             
                         }
-                        recognizer.view.tag = KBase_tag + toIndex;
-                        [(UIButton*)recognizer.view setTitle:[NSString stringWithFormat:@"tag值%ld",recognizer.view.tag] forState:UIControlStateNormal];
+                        recognizerView.tag = KBase_tag + toIndex;
+                        [recognizerView setTitle:[NSString stringWithFormat:@"tag值%ld",recognizerView.tag] forState:UIControlStateNormal];
                         
                     }];
                     
@@ -223,8 +227,8 @@
                             nextBt.tag++;
                             [nextBt setTitle:[NSString stringWithFormat:@"tag值%ld",nextBt.tag] forState:UIControlStateNormal];
                         }
-                        recognizer.view.tag = KBase_tag + toIndex;
-                        [(UIButton*)recognizer.view setTitle:[NSString stringWithFormat:@"tag值%ld",recognizer.view.tag] forState:UIControlStateNormal];
+                        recognizerView.tag = KBase_tag + toIndex;
+                        [recognizerView setTitle:[NSString stringWithFormat:@"tag值%ld",recognizerView.tag] forState:UIControlStateNormal];
                         
                     }];
                     
@@ -241,20 +245,23 @@
         
         // 结束时候恢复view的外观（放大，改变颜色等）
         [UIView animateWithDuration:0.2 animations:^{
-            recognizer.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            recognizer.view.alpha = 1;
+            recognizerView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            recognizerView.alpha = 1;
             
-            recognizer.view.center = valuePoint;
+            recognizerView.center = valuePoint;
         }];
     }
     
     
 }
+*/
 
 /**
  *  长按手势
  */
 -(void)longPress:(UIGestureRecognizer*)recognizer{
+    //
+    UIButton *recognizerView = (UIButton *)recognizer.view;
     
     // 长按视图在父视图中的位置（触摸点的位置）
     CGPoint recognizerPoint = [recognizer locationInView:self.view];
@@ -264,30 +271,35 @@
         
         // 开始的时候改变拖动view的外观（放大，改变颜色等）
         [UIView animateWithDuration:0.2 animations:^{
-            recognizer.view.transform = CGAffineTransformMakeScale(1.3, 1.3);
-            recognizer.view.alpha = 0.7;
+            recognizerView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+            recognizerView.alpha = 0.7;
         }];
         
         // 把拖动view放到最上层
-        [self.view bringSubviewToFront:recognizer.view];
+        [self.view bringSubviewToFront:recognizerView];
         
         // valuePoint保存最新的移动位置
-        valuePoint = recognizer.view.center;
+        valuePoint = recognizerView.center;
         
     }else if(recognizer.state == UIGestureRecognizerStateChanged){
         
         // 更新pan.view的center
-        recognizer.view.center = recognizerPoint;
+        recognizerView.center = recognizerPoint;
         
+        /**
+         * 可以创建一个继承UIButton的类(MyButton)，这样便于扩展，增加一些属性来绑定数据
+         * 如果在self.view上加其他控件拖拽会奔溃，可以在下面方法里面加判断MyButton，也可以把所有按钮放到一个全局变量的UIView上来替换self.view
+         
+         */
         for (UIButton * bt in self.view.subviews) {
-            
+           
             // 判断是否移动到另一个view区域
             // CGRectContainsPoint(rect,point) 判断某个点是否被某个frame包含
-            if (CGRectContainsPoint(bt.frame, recognizer.view.center)&&bt!=recognizer.view)
+            if (CGRectContainsPoint(bt.frame, recognizerView.center)&&bt!=recognizerView)
             {
-                
+                NSLog(@"bt_______%@",bt);
                 // 开始位置
-                NSInteger fromIndex = recognizer.view.tag - KBase_tag;
+                NSInteger fromIndex = recognizerView.tag - KBase_tag;
                 
                 // 需要移动到的位置
                 NSInteger toIndex = bt.tag - KBase_tag;
@@ -309,8 +321,8 @@
                             [nextBt setTitle:[NSString stringWithFormat:@"tag值%ld",nextBt.tag] forState:UIControlStateNormal];
                             
                         }
-                        recognizer.view.tag = KBase_tag + toIndex;
-                        [(UIButton*)recognizer.view setTitle:[NSString stringWithFormat:@"tag值%ld",recognizer.view.tag] forState:UIControlStateNormal];
+                        recognizerView.tag = KBase_tag + toIndex;
+                        [recognizerView setTitle:[NSString stringWithFormat:@"tag值%ld",recognizerView.tag] forState:UIControlStateNormal];
                         
                     }];
                     
@@ -330,8 +342,8 @@
                             nextBt.tag++;
                             [nextBt setTitle:[NSString stringWithFormat:@"tag值%ld",nextBt.tag] forState:UIControlStateNormal];
                         }
-                        recognizer.view.tag = KBase_tag + toIndex;
-                        [(UIButton*)recognizer.view setTitle:[NSString stringWithFormat:@"tag值%ld",recognizer.view.tag] forState:UIControlStateNormal];
+                        recognizerView.tag = KBase_tag + toIndex;
+                        [recognizerView setTitle:[NSString stringWithFormat:@"tag值%ld",recognizerView.tag] forState:UIControlStateNormal];
                         
                     }];
                     
@@ -348,10 +360,10 @@
         
         // 结束时候恢复view的外观（放大，改变颜色等）
         [UIView animateWithDuration:0.2 animations:^{
-            recognizer.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
-            recognizer.view.alpha = 1;
+            recognizerView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            recognizerView.alpha = 1;
             
-            recognizer.view.center = valuePoint;
+            recognizerView.center = valuePoint;
         }];
     }
     
