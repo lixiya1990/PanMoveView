@@ -29,6 +29,8 @@
 
 @implementation ViewController
 /**
+ *  实现思路：给按钮添加拖拽或者长按手势，根据按钮的偏移量更新按钮的位置，然后再根据移动的点的CGPoint是否移动到了其他view的位置来更新其他view的位置
+
  *  按照这个思路可以做类似支付宝首页 网易新闻选项卡界面的动态删除和添加
  */
 
@@ -188,7 +190,7 @@
                 if ((toIndex-fromIndex)>0) {
                     
                     // 从开始位置移动到结束位置
-                    // 把移动view的下一个view移动到记录的view的位置(valuePoint)，并把下一view的位置记为新的nextPoint，并把view的tag值-1,依次处理
+                    // 把移动view的下一个view移动到记录的view的位置(valuePoint)，并把下一view的位置记为新的nextPoint，并把view的tag值-1,依次类推
                     [UIView animateWithDuration:0.2 animations:^{
                         for (NSInteger i = fromIndex+1; i<=toIndex; i++) {
                             UIButton * nextBt = (UIButton*)[self.view viewWithTag:KBase_tag+i];
@@ -210,7 +212,7 @@
                 else
                 {
                     // 从开始位置移动到结束位置
-                    // 把移动view的上一个view移动到记录的view的位置(valuePoint)，并把上一view的位置记为新的nextPoint，并把view的tag值+1,依次处理
+                    // 把移动view的上一个view移动到记录的view的位置(valuePoint)，并把上一view的位置记为新的nextPoint，并把view的tag值+1,依次类推
                     [UIView animateWithDuration:0.2 animations:^{
                         for (NSInteger i = fromIndex-1; i>=toIndex; i--) {
                             UIButton * nextBt = (UIButton*)[self.view viewWithTag:KBase_tag+i];
@@ -295,7 +297,7 @@
                 if ((toIndex-fromIndex)>0) {
                     
                     // 从开始位置移动到结束位置
-                    // 把移动view的下一个view移动到记录的view的位置(valuePoint)，并把下一view的位置记为新的nextPoint，并把view的tag值-1,依次处理
+                    // 把移动view的下一个view移动到记录的view的位置(valuePoint)，并把下一view的位置记为新的nextPoint，并把view的tag值-1,依次类推
                     [UIView animateWithDuration:0.2 animations:^{
                         for (NSInteger i = fromIndex+1; i<=toIndex; i++) {
                             UIButton * nextBt = (UIButton*)[self.view viewWithTag:KBase_tag+i];
@@ -317,7 +319,7 @@
                 else
                 {
                     // 从开始位置移动到结束位置
-                    // 把移动view的上一个view移动到记录的view的位置(valuePoint)，并把上一view的位置记为新的nextPoint，并把view的tag值+1,依次处理
+                    // 把移动view的上一个view移动到记录的view的位置(valuePoint)，并把上一view的位置记为新的nextPoint，并把view的tag值+1,依次类推
                     [UIView animateWithDuration:0.2 animations:^{
                         for (NSInteger i = fromIndex-1; i>=toIndex; i--) {
                             UIButton * nextBt = (UIButton*)[self.view viewWithTag:KBase_tag+i];
