@@ -103,6 +103,11 @@
     [bt addTarget:self action:@selector(doDelete:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bt];
     
+    // 长按手势
+    UILongPressGestureRecognizer * longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [bt addGestureRecognizer:longPress];
+
+    
 }
 
 /**
