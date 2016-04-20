@@ -83,6 +83,8 @@
     // 添加按钮
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(doAdd)];
     
+    
+    // 
 }
 
 /**
